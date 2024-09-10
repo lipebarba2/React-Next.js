@@ -29,6 +29,13 @@ export default function Home() {
         )))
     }
 
+    const toggleItem = (index: number) => {
+        setList(list.map((item, i) => 
+            i === index ? { ...item, checked: !item.checked } : item
+        ));
+    }
+    
+
   return (
     <div className="w-screen h-screen flex flex-col justify-center items-center text-2xl">
 
@@ -53,7 +60,14 @@ export default function Home() {
 
             {list.map((item,index) => (
                 <li key={index}>
-                    
+
+                    <input 
+                        type="checkbox" 
+                        checked={item.checked}
+                        className="w-4 h-4 mr-3"
+                        onClick={() => toggleItem(index)}
+                    />
+
                     {item.label}
 
                     <button 
