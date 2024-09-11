@@ -9,29 +9,29 @@ export default function Home() {
 
     const [itemInput, setItemInput] = useState('')
     const [list, setList] = useState<TodoItem[]>([
-        {label: 'Estudar React', checked: false},
-        {label: 'Estudar Node', checked: false}
+        { id: 1, label: 'Estudar React', checked: false},
+        { id: 2, label: 'Estudar Node', checked: false}
     ])
 
     const handleAddButton = () => {
         if (itemInput.trim() !== '')
         setList([
             ...list,
-            {label: itemInput, checked: false}
+            {id: list.length + 1, label: itemInput, checked: false}
         ])
 
         setItemInput('')
     }
 
-    const handleDeleteButton = (index: number) => {
-        setList(list.filter((item, key) => (
-            key !== index
-        )))
+    const handleDeleteButton = (id: number) => {
+       setList(
+        list.filter(item => item.id !== id)
+       )
     }
 
-    const toggleItem = (index: number) => {
+    const toggleItem = (id: number) => {
         setList(list.map((item, i) => 
-            i === index ? { ...item, checked: !item.checked } : item
+            i === id ? { ...item, checked: !item.checked } : item
         ));
     }
     
@@ -58,21 +58,21 @@ export default function Home() {
 
         <ul className="w-full max-w-lg list-disc pl-5">
 
-            {list.map((item,index) => (
-                <li key={index}>
+            {list.map((item) => (
+                <li key={item.id}>
 
                     <input 
                         type="checkbox" 
                         checked={item.checked}
                         className="w-4 h-4 mr-3"
-                        onClick={() => toggleItem(index)}
+                        onClick={() => toggleItem(item.id)}
                     />
 
                     {item.label}
 
                     <button 
                         className="flex-1 p-3 bg-red-600 rounded-lg border-none m-6 hover:underline"
-                        onClick={() => handleDeleteButton(index)}
+                        onClick={() => handleDeleteButton(item.id)}
                         >
                             Deletar
                     </button>
